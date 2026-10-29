@@ -1,12 +1,12 @@
 > [!NOTE]
-> **This skill now lives in the main collection: [milad-ahmd/agent-skills](https://github.com/milad-ahmd/agent-skills/tree/main/skills/agent-memory-keeper)**. Please ⭐ star it there; that's where updates land first.
+> **This skill lives in the main collection: [milad-ahmd/agent-skills](https://github.com/milad-ahmd/agent-skills/tree/main/skills/agent-memory-keeper)**. Please ⭐ star it there; that's where updates land first.
 > Docs: **https://milad-ahmd.github.io/agent-skills/skills/agent-memory-keeper/** · Claude Code: `/plugin install all-skills --marketplace milad-ahmd/agent-skills`
 
 <div align="center">
 
 # 🧠 agent-memory-keeper
 
-**Persistent project memory (MEMORY.md) so your agent stops repeating the same mistakes. An Agent Skill for Claude Code, Cline, Cursor, Codex and other AI coding agents.**
+**Project memory (MEMORY.md) plus session handoffs (HANDOFF.md) so the next session picks up where this one stopped. An Agent Skill for Claude Code, Cline, Cursor, Codex and other AI coding agents.**
 
 [![License: MIT](https://img.shields.io/github/license/milad-ahmd/agent-memory-keeper)](LICENSE)
 [![Stars](https://img.shields.io/github/stars/milad-ahmd/agent-memory-keeper?style=social)](https://github.com/milad-ahmd/agent-memory-keeper)
@@ -43,10 +43,43 @@ Just ask your agent:
 
 ```text
 Remember that we use pnpm, not npm
-What do you remember about this project?
+Write a handoff, I'm running out of context
 ```
 
 The full workflow, rules and output format are in [`SKILL.md`](skills/agent-memory-keeper/SKILL.md).
+
+## 🔎 Sample output
+
+`handoff.py` is plain Python 3 with no dependencies and never touches your working tree. Real output halfway through a bug fix:
+
+```text
+$ python3 handoff.py
+
+Handoff facts for ~/code/shop
+
+- Repo: shop
+- Branch: fix/discount-rounding
+- HEAD: aa578d8 test: failing case for per-line discount rounding
+- Upstream: none
+- Base: main (merge-base f496d7e; 1 commits on this branch, 1 files changed)
+- In progress: none
+- Stash: 0
+- Uncommitted: 1 (0 staged, 1 unstaged, 0 untracked, 0 conflicted)
+  - .M cart.py
+
+Commits on this branch (newest first):
+- aa578d8 test: failing case for per-line discount rounding
+
+Files changed on this branch:
+- A test_discount.py
+
+TODO/FIXME/XXX added:
+- cart.py:2 (uncommitted) # TODO: confirm with finance whether coupons round per line or per order
+
+MEMORY.md: none · HANDOFF.md: none
+```
+
+`--write HANDOFF.md` turns these facts into a skeleton for the agent to fill in, and `--check HANDOFF.md` at the start of the next session reports if the repo no longer matches.
 
 ## 🧩 More skills
 
@@ -54,7 +87,7 @@ See the full collection: **[milad-ahmd/agent-skills](https://github.com/milad-ah
 
 ## 🤝 Contributing
 
-Issues and PRs are welcome, especially real-world before/after examples.
+This repo is a read-only mirror. Please open issues and PRs in **[milad-ahmd/agent-skills](https://github.com/milad-ahmd/agent-skills)**.
 
 ## 📄 License
 
